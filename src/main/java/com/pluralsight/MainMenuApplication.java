@@ -1,4 +1,6 @@
 package com.pluralsight;
+import jdk.jfr.Recording;
+
 import java.util.Scanner;
 import java.io.*;
 import java.time.*;
@@ -53,10 +55,10 @@ public class MainMenuApplication {
 
     public static void addDeposit(Scanner methodScanner) {
         double depositAmt = 0;
-        System.out.print("Enter your name");
+        System.out.print("Enter your name: ");
         String userName = methodScanner.nextLine();
 
-        System.out.print("Enter a short description");
+        System.out.print("Enter a short description: ");
         String description = methodScanner.nextLine();
         while(true){
 
@@ -72,13 +74,13 @@ public class MainMenuApplication {
         System.out.println(depositAmt);
 
         // add deposit amount parse into csv file
-        try{
-            FileWriter writer = new FileWriter("src/main/resources/transaction.csv", true);
-            writer.write("1999" + "|" + "time" +"|" + description + "|" + userName + "|" + depositAmt);
+        try(FileWriter writer = new FileWriter("src/main/resources/transaction.csv", true)){
+            writer.write("1999" + "|" + "time" +"|" + description + "|" + userName + "|" + depositAmt + "\n");
+
+
         } catch (IOException e){
             System.out.println("What were you trying to do?");
             throw new RuntimeException(e);
         }
     }
-
 }
