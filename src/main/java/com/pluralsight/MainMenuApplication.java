@@ -1,5 +1,4 @@
 package com.pluralsight;
-import jdk.jfr.Recording;
 
 import java.util.Scanner;
 import java.io.*;
@@ -53,34 +52,39 @@ public class MainMenuApplication {
         }
     }
 
-    public static void addDeposit(Scanner methodScanner) {
-        double depositAmt = 0;
-        System.out.print("Enter your name: ");
-        String userName = methodScanner.nextLine();
+        public static void addDeposit(Scanner methodScanner) {
+            LocalDateTime userTime = LocalDateTime.now();
+            String formattedDate = userTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+            String formattedTime = userTime.format(DateTimeFormatter.ofPattern("HH:mm:ss"));
 
-        System.out.print("Enter a short description: ");
-        String description = methodScanner.nextLine();
-        while(true){
 
-            System.out.print("Enter deposit amount: ");
-            depositAmt = Double.parseDouble(methodScanner.nextLine());
+            double depositAmt = 0;
+            System.out.print("Enter your name: ");
+            String userName = methodScanner.nextLine();
 
-            if(depositAmt < 1){
-                System.out.println("You tried to pull a fast one but were a bank");
-            } else{
-                break;
+            System.out.print("Enter a short description: ");
+            String description = methodScanner.nextLine();
+            while(true){
+
+                System.out.print("Enter deposit amount: ");
+                depositAmt = Double.parseDouble(methodScanner.nextLine());
+
+                if(depositAmt < 1){
+                    System.out.println("You tried to pull a fast one but were a bank");
+                } else{
+                    break;
+                }
+            }
+            System.out.println(depositAmt);
+
+            // add deposit amount parse into csv file
+            try(FileWriter writer = new FileWriter("src/main/resources/transaction.csv", true)){
+                writer.write(formattedDate + "|" + formattedTime +"|" + description + "|" + userName + "|" + depositAmt + "\n");
+
+
+            } catch (IOException e){
+                System.out.println("What were you trying to do?");
+                throw new RuntimeException(e);
             }
         }
-        System.out.println(depositAmt);
-
-        // add deposit amount parse into csv file
-        try(FileWriter writer = new FileWriter("src/main/resources/transaction.csv", true)){
-            writer.write("1999" + "|" + "time" +"|" + description + "|" + userName + "|" + depositAmt + "\n");
-
-
-        } catch (IOException e){
-            System.out.println("What were you trying to do?");
-            throw new RuntimeException(e);
-        }
-    }
 }
