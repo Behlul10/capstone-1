@@ -1,5 +1,8 @@
 package com.pluralsight;
 import java.util.Scanner;
+import java.io.*;
+import java.time.*;
+import java.time.format.DateTimeFormatter;
 
 public class MainMenuApplication {
     public static void main(String[] args) {
@@ -29,7 +32,7 @@ public class MainMenuApplication {
 
             switch (userInput){
                 case "a" -> {
-
+                    addDeposit(myScanner);
                 }
                 case "m" -> {
 
@@ -47,4 +50,35 @@ public class MainMenuApplication {
             }
         }
     }
+
+    public static void addDeposit(Scanner methodScanner) {
+        double depositAmt = 0;
+        System.out.print("Enter your name");
+        String userName = methodScanner.nextLine();
+
+        System.out.print("Enter a short description");
+        String description = methodScanner.nextLine();
+        while(true){
+
+            System.out.print("Enter deposit amount: ");
+            depositAmt = Double.parseDouble(methodScanner.nextLine());
+
+            if(depositAmt < 1){
+                System.out.println("You tried to pull a fast one but were a bank");
+            } else{
+                break;
+            }
+        }
+        System.out.println(depositAmt);
+
+        // add deposit amount parse into csv file
+        try{
+            FileWriter writer = new FileWriter("src/main/resources/transaction.csv", true);
+            writer.write("1999" + "|" + "time" +"|" + description + "|" + userName + "|" + depositAmt);
+        } catch (IOException e){
+            System.out.println("What were you trying to do?");
+            throw new RuntimeException(e);
+        }
+    }
+
 }
