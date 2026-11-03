@@ -1,7 +1,5 @@
 package com.pluralsight;
 
-import jdk.jfr.Recording;
-
 import java.util.Scanner;
 import java.io.*;
 import java.time.*;
@@ -12,33 +10,33 @@ import java.time.format.DateTimeFormatter;
  */
 public class MainMenuApplication {
     public static void main(String[] args) {
-        Scanner myScanner = new Scanner(System.in);
-        String userInput;
-        String space = " ";
-        while(true){
-            System.out.printf("""
-          ______________________________________
-         |                                      |
-         |              ATM TERMINAL            |
-         |   ________________________________   |
-         |  |                                |  |
-         |  |  A) Add Deposit                |  |
-         |  |  M) Make Payment (Debit)       |  |
-         |  |  L) Ledger                     |  |
-         |  |  X) Exit                       |  |
-         |  |                                |  |
-               Select an option:%s""", space);
-            userInput = myScanner.nextLine().toLowerCase();
-            switch (userInput){
+            Scanner myScanner = new Scanner(System.in);
+            String transactionPath = "src/main/resources/transaction.csv";
+            String userInput;
+            String space = " ";
+            while(true){
+                System.out.printf("""
+              ______________________________________
+             |                                      |
+             |              ATM TERMINAL            |
+             |   ________________________________   |
+             |  |                                |  |
+             |  |  A) Add Deposit                |  |
+             |  |  M) Make Payment (Debit)       |  |
+             |  |  L) Ledger                     |  |
+             |  |  X) Exit                       |  |
+             |  |                                |  |
+                   Select an option:%s""", space);
+                userInput = myScanner.nextLine().toLowerCase();
+                switch (userInput){
                 case "a" -> {
-                    addDeposit(myScanner);
+                    addDeposit(myScanner, transactionPath);
                 }
                 case "m" -> {
-                    makePayment(myScanner);
+                    makePayment(myScanner, transactionPath);
                 }
                 case "l" -> {
                     ledgerScreen(myScanner);
-
                 }
                 case "x" -> {
                     System.exit(0);
@@ -50,20 +48,22 @@ public class MainMenuApplication {
         }
     }
 
-        public static void addDeposit(Scanner methodScanner) {
+        public static void addDeposit(Scanner methodScanner, String transactionPath) {
+            //Getting time of user in correct format
             LocalDateTime userTime = LocalDateTime.now();
             String formattedDate = userTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
             String formattedTime = userTime.format(DateTimeFormatter.ofPattern("HH:mm:ss"));
 
-
+            //intilizing
+            String description = "deposit";
             double depositAmt = 0;
+
+            //user inpit
             System.out.print("Enter your name: ");
             String userName = methodScanner.nextLine();
 
-            System.out.print("Enter a short description: ");
-            String description = methodScanner.nextLine();
+            //looping deposit amount input until user inputs a valid deposit amount
             while(true){
-
                 System.out.print("Enter deposit amount: ");
                 depositAmt = Double.parseDouble(methodScanner.nextLine());
 
@@ -73,27 +73,24 @@ public class MainMenuApplication {
                     break;
                 }
             }
-            System.out.println(depositAmt);
 
             // add deposit amount parse into csv file
-            try(FileWriter writer = new FileWriter("src/main/resources/transaction.csv", true)){
+            try(FileWriter writer = new FileWriter(transactionPath, true)){
                 writer.write(formattedDate + "|" + formattedTime +"|" + description + "|" + userName + "|" + depositAmt + "\n");
             } catch (IOException e){
                 System.out.println("What were you trying to do?");
                 throw new RuntimeException(e);
             }
+            System.out.println("Transaction Successful!");
         }
 
-        public static void makePayment(Scanner methodScanner) {
+        public static void makePayment(Scanner methodScanner, String transactionPath) {
             LocalDateTime userTime = LocalDateTime.now();
             String formattedDate = userTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
             String formattedTime = userTime.format(DateTimeFormatter.ofPattern("HH:mm:ss"));
 
 
             System.out.print("enter your card number: ");
-            long cardNum = Long.parseLong(methodScanner.nextLine());
-
-            System.out.print("What are you buying?: ");
             String description = methodScanner.nextLine();
 
             System.out.print("Who is the vendor your buying from?: ");
@@ -105,8 +102,8 @@ public class MainMenuApplication {
                 amount *= -1;
             }
 
-            try(FileWriter writer = new FileWriter("src/main/resources/payments.csv", true)){
-                writer.write(formattedDate + "|" + formattedTime +"|" + cardNum + "|" + description + "|" + "|" + vendor + "|" + amount +"\n");
+            try(FileWriter writer = new FileWriter(transactionPath, true)){
+                writer.write(formattedDate + "|" + formattedTime +"|" + description  + "|" + vendor + "|" + amount +"\n");
             } catch(IOException e){
                 System.out.println("What were you trying to do?");
                 throw new RuntimeException(e);
@@ -118,6 +115,7 @@ public class MainMenuApplication {
         String userInput;
         Boolean breakPoint = true;
         while(breakPoint){
+            //create a ledger class instance with all csvs inputted
             System.out.println("""
                 A -  All entries
                 D - Deposits
@@ -129,6 +127,7 @@ public class MainMenuApplication {
             switch (userInput){
                 case "a" ->{
                     //print
+                    //class.getall()
                 }
                 case "d" -> {
                     //deposit
@@ -147,9 +146,6 @@ public class MainMenuApplication {
                     System.out.printf("What are we doing? Please type something I can understand!");
                 }
             }
-
         }
-
-
     }
 }
