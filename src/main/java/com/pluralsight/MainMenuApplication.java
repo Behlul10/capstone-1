@@ -5,6 +5,10 @@ import java.io.*;
 import java.time.*;
 import java.time.format.DateTimeFormatter;
 
+/**
+ *
+ * @author Behlul
+ */
 public class MainMenuApplication {
     public static void main(String[] args) {
         Scanner myScanner = new Scanner(System.in);
@@ -39,6 +43,7 @@ public class MainMenuApplication {
                     makePayment(myScanner);
                 }
                 case "l" -> {
+                    ledgerScreen();
 
                 }
                 case "x" -> {
