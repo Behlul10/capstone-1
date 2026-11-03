@@ -16,17 +16,24 @@ public class MainMenuApplication {
             String space = " ";
             while(true){
                 System.out.printf("""
-              ______________________________________
+             \033[32m
+             ========================================
              |                                      |
              |              ATM TERMINAL            |
-             |   ________________________________   |
+             |   ================================   |
              |  |                                |  |
              |  |  A) Add Deposit                |  |
              |  |  M) Make Payment (Debit)       |  |
              |  |  L) Ledger                     |  |
              |  |  X) Exit                       |  |
              |  |                                |  |
-                   Select an option:%s""", space);
+             |  |                                |  |
+             |  |                                |  |
+             |  |        Select an option        |  |
+             |  |                                |  |
+             |  ==================================  |
+             ========================================
+             Were you listening to me Neo? -->%s""", space);
                 userInput = myScanner.nextLine().toLowerCase();
                 switch (userInput){
                 case "a" -> {
@@ -36,7 +43,7 @@ public class MainMenuApplication {
                     makePayment(myScanner, transactionPath);
                 }
                 case "l" -> {
-                    ledgerScreen(myScanner);
+                    ledgerScreen(myScanner, transactionPath);
                 }
                 case "x" -> {
                     System.exit(0);
@@ -111,32 +118,52 @@ public class MainMenuApplication {
             System.out.println("Transaction Successful!");
         }
 
-    public static void ledgerScreen(Scanner methodScanner) {
+    public static void ledgerScreen(Scanner methodScanner, String transactionPath) {
         String userInput;
         Boolean breakPoint = true;
         while(breakPoint){
-            //create a ledger class instance with all csvs inputted
-            System.out.println("""
-                A -  All entries
-                D - Deposits
-                P - Payments
-                R - Reports
-                H) Home
-                """);
+            //create a ledger class instance with all csv's inputted
+            Ledgers myLedger = new Ledgers(transactionPath);
+            String space = " ";
+            System.out.printf("""
+             \033[36m
+             ========================================
+             |                                      |
+             |            Ledger Options            |
+             |   ================================   |
+             |  |                                |  |
+             |  |  A) All entries                |  |
+             |  |  D) Deposits                   |  |
+             |  |  P) Payments                   |  |
+             |  |  R) Reports                    |  |
+             |  |  H) Home                       |  |
+             |  |                                |  |
+             |  |                                |  |
+             |  |        Select an option        |  |
+             |  |                                |  |
+             |  ==================================  |
+             ========================================
+             You have to choose a pill Keanu! -->%s""", space);
+
             userInput = methodScanner.nextLine().toLowerCase();
             switch (userInput){
                 case "a" ->{
-                    //print
-                    //class.getall()
+                    System.out.println("\n--- All Entries ---");
+                    for (LedgerEntry entry : myLedger.getAllEntries()) {
+                        System.out.println(entry); // This calls toString() on each entry
+                    }
+                    System.out.println("--- End of List ---\n");
                 }
                 case "d" -> {
-                    //deposit
+                    //deposits
+                    System.out.println(myLedger.getDeposits());
                 }
                 case "p" -> {
-                    //
+                    //payments
+                    System.out.println(myLedger.getPayments());
                 }
                 case "r" -> {
-
+//                    System.out.println(myLedger.get);
                 }
                 case "h" -> {
                     breakPoint = false;
