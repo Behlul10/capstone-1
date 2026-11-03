@@ -1,20 +1,22 @@
 package com.pluralsight;
 
+import jdk.jfr.Recording;
+
 import java.util.Scanner;
 import java.io.*;
 import java.time.*;
 import java.time.format.DateTimeFormatter;
 
 /**
- *
  * @author Behlul
  */
 public class MainMenuApplication {
     public static void main(String[] args) {
         Scanner myScanner = new Scanner(System.in);
         String userInput;
+        String space = " ";
         while(true){
-            System.out.println("""
+            System.out.printf("""
           ______________________________________
          |                                      |
          |              ATM TERMINAL            |
@@ -25,16 +27,8 @@ public class MainMenuApplication {
          |  |  L) Ledger                     |  |
          |  |  X) Exit                       |  |
          |  |                                |  |
-         |  |  Select an option: _           |  |
-         |  |________________________________|  |
-         |                                      |
-         |      [1] [2] [3]    CARD: [====]     |
-         |      [4] [5] [6]                     |
-         |      [7] [8] [9]    CASH: [______]   |
-         |      [*] [0] [#]                     |
-         |______________________________________|""");
+               Select an option:%s""", space);
             userInput = myScanner.nextLine().toLowerCase();
-
             switch (userInput){
                 case "a" -> {
                     addDeposit(myScanner);
@@ -43,7 +37,7 @@ public class MainMenuApplication {
                     makePayment(myScanner);
                 }
                 case "l" -> {
-                    ledgerScreen();
+                    ledgerScreen(myScanner);
 
                 }
                 case "x" -> {
@@ -118,6 +112,43 @@ public class MainMenuApplication {
                 throw new RuntimeException(e);
             }
             System.out.println("Transaction Successful!");
+        }
+
+    public static void ledgerScreen(Scanner methodScanner) {
+        String userInput;
+        Boolean breakPoint = true;
+        while(breakPoint){
+            System.out.println("""
+                A -  All entries
+                D - Deposits
+                P - Payments
+                R - Reports
+                H) Home
+                """);
+            userInput = methodScanner.nextLine().toLowerCase();
+            switch (userInput){
+                case "a" ->{
+                    //print
+                }
+                case "d" -> {
+                    //deposit
+                }
+                case "p" -> {
+                    //
+                }
+                case "r" -> {
+
+                }
+                case "h" -> {
+                    breakPoint = false;
+                }
+
+                default -> {
+                    System.out.printf("What are we doing? Please type something I can understand!");
+                }
+            }
+
+        }
 
 
     }
