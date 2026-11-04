@@ -1,4 +1,6 @@
 package com.pluralsight;
+import java.time.*;
+import java.time.format.DateTimeFormatter;
 
 public class LedgerEntry {
     private String date;
@@ -6,6 +8,7 @@ public class LedgerEntry {
     private String description;
     private String vendor;
     private double amount;
+    public DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd"); //returns format in specified format
 
     public LedgerEntry(String date, String time, String description, String vendor, double amount){
         this.date = date;
@@ -15,7 +18,8 @@ public class LedgerEntry {
         this.amount = amount;
     }
 
-    public String getDate() { return date; }
+    //returns date in a loccaldate format instead of string
+    public LocalDate getDate() { return LocalDate.parse(date, formatter); }
 
     public String getTime() { return time; }
 

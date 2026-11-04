@@ -10,8 +10,81 @@ import java.time.format.DateTimeFormatter;
  */
 public class MainMenuApplication {
     public static void main(String[] args) {
+        //region art
+        String pcAsciiArt = """
+            ::::==========::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+            :::::::=========::::::.---------------.:::::::::::::::::::::::::::::::::::::::::::
+            :::=============::::::| .-----------. |:::::::::::::::::::::::::::::::::::::::::::
+            ::::==========::::::::| | === == == | |:::::::::::::::::::::::::::::::::::::::::::
+            ::::==========::::::::| | 260 ED OO | |:::::::::::::::::::::::::::::::::::::::::::
+            :::::::=========='::::| |  urgent!  | |:::::::::::::::::::::::::::::::::::::::::::
+            :::===========::::::::| |___________| |::::::((;):::::::::::::::::::::::::::::::::
+            ""\""============""\"""\"|___________oo__|"")""\"";(""\"""\"""\"""\"""\"""\"""\""
+              ==========='           ___)___(___,o  (   .---._
+                 ===========        |___________| 8  \\ |TEA|_)    .+-------+.
+              ===========                     o8o8    ) |___|    .' |_______| `.
+                =============      __________8___    (          /  /         \\  \\
+             |\\`==========='/|   .'= --------- --`.   `.       |\\ /           \\ /|
+             | "-----------" |  / ooooooooooooo  oo\\   _\\_     | "-------------" |
+             |______I_N______| /  oooooooooooo[] ooo\\  |=|     |_______OUT_______|
+                              / O O =========  O OO  \\ "-"   .-------,
+                              `""\"""\"""\"""\"""\"""\"""\""'      /~~~~~~~/
+            _______________________________________________/_   ~~~/_______________
+            hjw.......................................... \\/_____/..desk at 17:30..
+            """;
+        String eyeAsciiArt = """
+            .           ..         .           .       .           .           .
+                  .         .            .          .       .
+                        .         ..xxxxxxxxxx....               .       .             .
+                .             MWMWMWWMWMWMWMWMWMWMWMWMW                       .
+                          IIIIMWMWMWMWMWMWMWMWMWMWMWMWMWMttii:        .           .
+             .      IIYVVXMWMWMWMWMWMWMWMWMWMWMWMWMWMWMWMWMWMWMWxx...         .           .
+                 IWMWMWMWMWMWMWMWMWMWMWMWMWMWMWMWMWMWMWMWMWMWMWMWMWMWMx..
+               IIWMWMWMWMWMWMWMWMWBY%ZACH%AND%OWENMWMWMWMWMWMWMWMWMWMWMWMWMx..        .
+                ""MWMWMWMWMWM""\"""\""".  .:..   .""\"""MWMWMWMWMWMWMWMWMWMWMWMWMWti.
+             .     ""   . `  .: . :. : .  . :.  .  . . .  ""\""MWMWMWMWMWMWMWMWMWMWMWMWMti=
+                    . .   :` . :   .  .'.' '....xxxxx...,'. '   ' .""\"YWMWMWMWMWMWMWMWMWMW+
+                 ; . ` .  . : . .' :  . ..XXXXXXXXXXXXXXXXXXXXx.    `     . "YWMWMWMWMWMWMW
+            .    .  .  .    . .   .  ..XXXXXXXXWWWWWWWWWWWWWWWWXXXX.  .     .     ""\"""\""
+                    ' :  : . : .  ...XXXXXWWW"   W88N88@888888WWWWWXX.   .   .       . .
+               . ' .    . :   ...XXXXXXWWW"    M88N88GGGGGG888^8M "WMBX.          .   ..  :
+                     :     ..XXXXXXXXWWW"     M88888WWRWWWMW8oo88M   WWMX.     .    :    .
+                       "XXXXXXXXXXXXWW"       WN8888WWWWW  W8@@@8M    BMBRX.         .  : :
+              .       XXXXXXXX=MMWW":  .      W8N888WWWWWWWW88888W      XRBRXX.  .       .
+                 ....  ""XXXXXMM::::. .        W8@889WWWWWM8@8N8W      . . :RRXx.    .
+                     ``...'''  MMM::.:.  .      W888N89999888@8W      . . ::::"RXV    .  :
+             .       ..'''''      MMMm::.  .      WW888N88888WW     .  . mmMMMMMRXx
+                  ..' .            ""MMmm .  .       WWWWWWW   . :. :,miMM""\"  : ""`    .
+               .                .       ""MMMMmm . .  .  .   ._,mMMMM""\"  :  ' .  :
+                           .                  ""MMMMMMMMMMMMM""\" .  : . '   .        .
+                      .              .     .    .                      .         .
+            .                                         .          .         .
 
-    Scanner myScanner = new Scanner(System.in);
+            """;
+
+        //endregion
+
+        try {
+
+            Thread.sleep(500);
+            System.out.print("N");
+            Thread.sleep(500);
+            System.out.print("e");
+            Thread.sleep(500);
+            System.out.println("o");
+            Thread.sleep(500);
+            System.out.println(pcAsciiArt);
+            Thread.sleep(500);
+            System.out.println(eyeAsciiArt);
+        } catch (
+                InterruptedException e) {
+            e.printStackTrace();
+        }
+
+
+
+
+        Scanner myScanner = new Scanner(System.in);
     String transactionPath = "src/main/resources/transaction.csv";
     String userInput;
     String space = " ";
@@ -32,7 +105,6 @@ public class MainMenuApplication {
                 ║  │                                │  ║
                 ║  │  [A]  Add Deposit              │  ║
                 ║  │  [M]  Make Payment (Debit)     │  ║
-                .
                 ║  │  [L]  Ledger                   │  ║
                 ║  │  [X]  Exit                     │  ║
                 ║  │                                │  ║
@@ -176,7 +248,7 @@ public static void ledgerScreen(Scanner methodScanner, String transactionPath) {
             }
             case "r" -> {
                 //Report menu
-                reportMenuScreen(methodScanner);
+                reportMenuScreen(methodScanner, myLedger);
             }
             case "h" -> {
                 breakPoint = false;
@@ -189,7 +261,7 @@ public static void ledgerScreen(Scanner methodScanner, String transactionPath) {
     }
 }
 
-public static void reportMenuScreen(Scanner methodScanner) {
+public static void reportMenuScreen(Scanner methodScanner, Ledgers myLedger) {
     String space = " ";
     int usrInput;
     boolean breakPoint = true;
@@ -224,20 +296,19 @@ public static void reportMenuScreen(Scanner methodScanner) {
         usrInput = Integer.parseInt(methodScanner.nextLine());
 
         switch (usrInput) {
-            case 1 -> {
-                //TODO: month to date
-            }
-            case 2 -> {
-                //TODO: previous month
-            }
+            case 1 -> searchMontToDate(methodScanner, myLedger); //month to date
+            case 2 -> searchPreviousMonth(myLedger); //previous month
             case 3 -> {
                 //TODO: year to date
+                searchYeartoDate(methodScanner, myLedger);
             }
             case 4 -> {
                 //TODO: prev year
+                searchPreviousYear(myLedger);
             }
             case 5 -> {
                 //TODO: search by vendor
+                searchVendor(methodScanner, myLedger);
             }
             case 0 -> {
                 breakPoint = false;
@@ -248,4 +319,50 @@ public static void reportMenuScreen(Scanner methodScanner) {
         }
     }
 }
+    public static void searchMontToDate(Scanner methodScanner, Ledgers myLedger) {
+        System.out.println("enter a date you want to search in the following format MM/dd/yyyy: ");
+        String userInput = methodScanner.nextLine();
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy"); //returns format in specified format
+        LocalDate searchDate = LocalDate.parse(userInput, formatter); //parsing user input into LocalDate type
+
+        //for each loop, looping through list of entries in the csv file as item
+        for (LedgerEntry item: myLedger.getAllEntries()){
+            //getting date of each item
+            LocalDate ledgerDate = item.getDate();
+
+            //if the month value of the month to search and year to search matches the singular entry
+            if (ledgerDate.getMonthValue() == searchDate.getMonthValue() && ledgerDate.getYear() == searchDate.getYear()){
+                System.out.println(item);
+            }
+        }
+    }
+
+    public static void searchPreviousMonth(Ledgers myLedger) {
+        LocalDateTime userTime = LocalDateTime.now();
+
+        //for each loop, looping through list of entries in the csv file as item
+        for (LedgerEntry item: myLedger.getAllEntries()){
+            //getting date of each item
+            LocalDate ledgerDate = item.getDate();
+
+            //if the month value of the month to search and year to user time matches the singular entry
+            if (ledgerDate.getMonthValue() == userTime.getMonthValue() && ledgerDate.getYear() == userTime.getYear()){
+                System.out.println(item);
+            }
+        }
+    }
+
+    public static void searchYeartoDate(Scanner methodScanner, Ledgers myLedger) {
+
+    }
+
+    public static void searchPreviousYear(Ledgers myLedger) {
+
+    }
+
+    public static void searchVendor(Scanner methodScanner, Ledgers myLedger) {
+
+    }
+
 }
