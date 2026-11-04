@@ -296,35 +296,29 @@ public static void reportMenuScreen(Scanner methodScanner, Ledgers myLedger) {
         usrInput = Integer.parseInt(methodScanner.nextLine());
 
         switch (usrInput) {
-            case 1 -> searchMontToDate(methodScanner, myLedger); //month to date
-            case 2 -> searchPreviousMonth(myLedger); //previous month
-            case 3 -> {
-                //TODO: year to date
-                searchYeartoDate(methodScanner, myLedger);
-            }
-            case 4 -> {
-                //TODO: prev year
-                searchPreviousYear(myLedger);
-            }
-            case 5 -> {
-                //TODO: search by vendor
-                searchVendor(methodScanner, myLedger);
-            }
-            case 0 -> {
-                breakPoint = false;
-            }
-            default -> {
-                System.out.println("What was it that I said Neo?");
-            }
+            case 1 -> searchToDate(myLedger, "Month"); //month to date
+            case 2 -> searchPrevious(myLedger,"month"); //previous month
+            case 3 -> searchToDate(myLedger, "Year"); //year to date
+            case 4 -> searchPrevious(myLedger, "year"); //prev year
+            case 5 -> searchVendor(methodScanner, myLedger);
+            case 0 -> breakPoint = false;
+            default -> System.out.println("What was it that I said Neo?");
         }
     }
 }
-    public static void searchMontToDate(Scanner methodScanner, Ledgers myLedger) {
-        System.out.println("enter a date you want to search in the following format MM/dd/yyyy: ");
-        String userInput = methodScanner.nextLine();
 
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy"); //returns format in specified format
-        LocalDate searchDate = LocalDate.parse(userInput, formatter); //parsing user input into LocalDate type
+    public static void searchToDate(Ledgers myLedger, String userDateOption) {
+        LocalDate today = LocalDate.now();
+        LocalDate startOfOption;
+
+        //setting start of date
+        if(userDateOption.equals("Year")){
+            startOfOption = LocalDate.of(today.getYear(), 1, 1); // Jan 1st of current year
+        } else {
+            startOfOption = today.withDayOfMonth(1); // Sets day to 1, keeps month/year + becomes an immutable object
+        }
+
+        System.out.println("---- " + userDateOption + " to date from " + startOfOption + " to " + today + " ----");
 
         //for each loop, looping through list of entries in the csv file as item
         for (LedgerEntry item: myLedger.getAllEntries()){
@@ -332,37 +326,43 @@ public static void reportMenuScreen(Scanner methodScanner, Ledgers myLedger) {
             LocalDate ledgerDate = item.getDate();
 
             //if the month value of the month to search and year to search matches the singular entry
-            if (ledgerDate.getMonthValue() == searchDate.getMonthValue() && ledgerDate.getYear() == searchDate.getYear()){
+            if (!ledgerDate.isBefore(startOfOption) && !ledgerDate.isAfter(today)){
                 System.out.println(item);
             }
         }
     }
 
-    public static void searchPreviousMonth(Ledgers myLedger) {
-        LocalDateTime userTime = LocalDateTime.now();
 
-        //for each loop, looping through list of entries in the csv file as item
-        for (LedgerEntry item: myLedger.getAllEntries()){
-            //getting date of each item
-            LocalDate ledgerDate = item.getDate();
+    public static void searchPrevious(Ledgers myLedger, String userDateOption) {
+        LocalDate userCurrentTime = LocalDate.now();
+        LocalDate targetDate;
 
-            //if the month value of the month to search and year to user time matches the singular entry
-            if (ledgerDate.getMonthValue() == userTime.getMonthValue() && ledgerDate.getYear() == userTime.getYear()){
+        if (userDateOption.equalsIgnoreCase("year")) {      //setting target date based on specification
+            targetDate = userCurrentTime.minusYears(1);
+        } else {
+            targetDate = userCurrentTime.minusMonths(1);
+        }
+
+        for (LedgerEntry item: myLedger.getAllEntries()){   //looping through each ledger entry as 'item'
+            LocalDate ledgerDate = item.getDate();            //getting date of each item
+
+            if (ledgerDate.equals(targetDate)) { //checking if target date equals to ledger date
                 System.out.println(item);
             }
         }
-    }
-
-    public static void searchYeartoDate(Scanner methodScanner, Ledgers myLedger) {
-
-    }
-
-    public static void searchPreviousYear(Ledgers myLedger) {
-
     }
 
     public static void searchVendor(Scanner methodScanner, Ledgers myLedger) {
 
-    }
+        System.out.println("enter the name of the vendor you want to search: ");
+        String userInput = methodScanner.nextLine();
 
+        //for each loop, looping through list of entries in the csv file as item
+        for (LedgerEntry item: myLedger.getAllEntries()){
+            //if the month value of the month to search and year to search matches the singular entry
+            if (item.getVendor().equals(userInput)){
+                System.out.println(item);
+            }
+        }
+    }
 }
