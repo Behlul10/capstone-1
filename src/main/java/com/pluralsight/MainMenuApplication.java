@@ -207,18 +207,27 @@ public class MainMenuApplication {
             switch (usrInput){
                 case 1 ->{
                     //TODO: month to date
+                    //method pass in scanner
+                    //ask user what to enter a month
                 }
                 case 2 -> {
                     //TODO: previous month
+                    //get ledger , include if time.now - 1 month return and display
                 }
                 case 3 -> {
                     //TODO: year to date
+                    // get ledger , include if time.now - 1 year return and display
                 }
                 case 4 -> {
                     //TODO: prev year
+                    //get ledger , exclude if time.now - 1 year return and display (time.now-year so if time.now == 2026 we need to return jan-dec 2025)
+
                 }
                 case 5 -> {
                     //TODO: search by vendor
+                    //pass scanner
+                    //ask name of vendor + filter out edge cases
+                    //for each loop through array
                 }
                 case 0 -> {
                     breakPoint = false;
