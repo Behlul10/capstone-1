@@ -1,5 +1,7 @@
 package com.pluralsight;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 import java.io.*;
 import java.time.*;
@@ -79,10 +81,14 @@ public class MainMenuApplication {
             e.printStackTrace();
         }
         //endregion
+
+        //Initializing
         Scanner myScanner = new Scanner(System.in);
         String transactionPath = "src/main/resources/transaction.csv";
         String userInput;
         String space = " ";
+
+        //Main Menu Loop
         while (true) {
             System.out.printf("""
                     \033[32m
@@ -110,21 +116,11 @@ public class MainMenuApplication {
                     \033[0mWere you listening to me Neo? -->%s""", space);
             userInput = myScanner.nextLine().toLowerCase();
             switch (userInput) {
-                case "a" -> {
-                    addDeposit(myScanner, transactionPath);
-                }
-                case "m" -> {
-                    makePayment(myScanner, transactionPath);
-                }
-                case "l" -> {
-                    ledgerScreen(myScanner, transactionPath);
-                }
-                case "x" -> {
-                    System.exit(0);
-                }
-                default -> {
-                    System.out.println("Invalid Input, Try again!");
-                }
+                case "a" -> addDeposit(myScanner, transactionPath);
+                case "m" -> makePayment(myScanner, transactionPath);
+                case "l" -> ledgerScreen(myScanner, transactionPath);
+                case "x" -> System.exit(0);
+                default -> System.out.println("Invalid Input, Try again!");
             }
         }
     }
@@ -135,11 +131,11 @@ public class MainMenuApplication {
         String formattedDate = userTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
         String formattedTime = userTime.format(DateTimeFormatter.ofPattern("HH:mm:ss"));
 
-        //intilizing
+        //initializing
         String description = "deposit";
         double depositAmt = 0;
 
-        //user inpit
+        //user input
         System.out.print("Enter your name: ");
         String userName = methodScanner.nextLine();
 
@@ -234,24 +230,20 @@ public class MainMenuApplication {
                     System.out.println("--- End of List ---\n");
                 }
                 case "d" -> {
-                    //loop deposits
-                    System.out.println(myLedger.getDeposits());
+                    //loop deposits and print
+                    for (LedgerEntry item : myLedger.getDeposits()){
+                        System.out.println(item);
+                    }
                 }
                 case "p" -> {
                     //payments
-                    System.out.println(myLedger.getPayments());
+                    for (LedgerEntry item : myLedger.getPayments()){
+                        System.out.println(item);
+                    }
                 }
-                case "r" -> {
-                    //Report menu
-                    reportMenuScreen(methodScanner, myLedger);
-                }
-                case "h" -> {
-                    breakPoint = false;
-                }
-
-                default -> {
-                    System.out.printf("What are we doing? Please type something I can understand!");
-                }
+                case "r" -> reportMenuScreen(methodScanner, myLedger); //Report menu
+                case "h" -> breakPoint = false;
+                default -> System.out.printf("What are we doing? Please type something I can understand!");
             }
         }
     }
@@ -281,6 +273,7 @@ public class MainMenuApplication {
                     ║  │  [3]  Year To Date             │  ║
                     ║  │  [4]  Previous Year            │  ║
                     ║  │  [5]  Search by Vendor         │  ║
+                    ║  │  [6]  Custom Search            │  ║
                     ║  │  [0]  Go Back                  │  ║
                     ║  │                                │  ║
                     ║  ├────────────────────────────────┤  ║
@@ -296,10 +289,83 @@ public class MainMenuApplication {
                 case 3 -> searchToDate(myLedger, "Year"); //year to date
                 case 4 -> searchPrevious(myLedger, "year"); //prev year
                 case 5 -> searchVendor(methodScanner, myLedger);
+                case 6 -> searchCustom(methodScanner, myLedger);
                 case 0 -> breakPoint = false;
                 default -> System.out.println("What was it that I said Neo?");
             }
         }
+    }
+
+    public static void searchCustom(Scanner methodScanner, Ledgers myLedger) {
+        List<LedgerEntry> results = new ArrayList<>();
+        System.out.println("Press enter if you want to leave empty.");
+
+        System.out.print("Start date: ");
+        String startInput = methodScanner.nextLine();
+
+        System.out.print("End Date: ");
+        String endInput = methodScanner.nextLine();
+
+        System.out.print("Description: ");
+        String description = methodScanner.nextLine();
+
+        System.out.print("Vendor: ");
+        String vendor = methodScanner.nextLine();
+
+        System.out.print("Amount: ");
+        String amountInput = methodScanner.nextLine();
+
+
+        LocalDate startDate = null;
+        LocalDate endDate = null;
+        Double amount = null;
+
+        //P A R S E    I F    N O T    E M P T Y
+        //Start Date
+        if (!startInput.isBlank()) {//blank checks whitespaces
+            startDate = LocalDate.parse(startInput);
+        } //End date
+        if (!endInput.isBlank()){
+            endDate = LocalDate.parse(endInput);
+        } //Amount
+        if (!amountInput.isBlank()) {
+            amount = Double.parseDouble(amountInput);
+        }
+
+        //Looping through each entry && Seeing if it meets the criteria
+        for (LedgerEntry entry : myLedger.getAllEntries()){
+            boolean matches = true;
+
+            //filter through start-date, end-date, description, vendor, amount
+            if (startDate != null && entry.getDate().isBefore(startDate)) { //checks for start date and if entry is too old
+                matches = false;
+            }
+            if (endDate != null && entry.getDate().isAfter(endDate)) { //if user set something and entry is before users input date
+                matches = false;
+            }
+            if (!description.isBlank() && entry.getDescription().contains(description)) {
+                matches = false;
+            }
+            if (!vendor.isBlank() && entry.getVendor().equals(vendor)) {
+                matches = false;
+            }
+
+            if (amount != null && entry.getAmount() != amount){
+                matches = false;
+            }
+
+            //FINALLY ADD MATCHES IF IT PASSED ALL THE CRITERIA
+            if(matches) {
+                results.add(entry);
+            }
+        }
+
+        System.out.println("========================== Start ==========================");
+        //printing final result
+        for (LedgerEntry entry : results) {
+            System.out.println(entry);
+        }
+        System.out.println("====================== END OF THE LINE ======================");
     }
 
     public static void searchToDate(Ledgers myLedger, String userDateOption) {
@@ -348,7 +414,6 @@ public class MainMenuApplication {
     }
 
     public static void searchVendor(Scanner methodScanner, Ledgers myLedger) {
-
         System.out.println("enter the name of the vendor you want to search: ");
         String userInput = methodScanner.nextLine();
 
