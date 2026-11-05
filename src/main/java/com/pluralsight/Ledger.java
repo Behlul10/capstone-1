@@ -6,11 +6,14 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Ledgers {
+/**
+ *
+ */
+public class Ledger {
     private List<LedgerEntry> entries;
     String filePath;
 
-    public Ledgers(String filePath){
+    public Ledger(String filePath){
         this.filePath = filePath;
         this.entries = new ArrayList<>();
         loadEntries();
@@ -18,27 +21,27 @@ public class Ledgers {
     private void loadEntries(){
         //reading csv file
         try(BufferedReader reader = new BufferedReader(new FileReader(filePath))){
-          String line;
-          //loading csv line to line var + checking if line is not empty
-          while ((line = reader.readLine()) != null) {
-              if (line.trim().isEmpty()) {
-                  continue; // Skip empty lines
-              }
-              //parsing each part with pipes
-              String[] parts = line.split("\\|");
-              //making sure we have each field before loading it into variables
-              if (parts.length == 5) {
-                  String date = parts[0];
-                  String time = parts[1];
-                  String description = parts[2];
-                  String vendor = parts[3];
-                  double amount = Double.parseDouble(parts[4]);
+            String line;
+            //loading csv line to line var + checking if line is not empty
+            while ((line = reader.readLine()) != null) {
+                if (line.trim().isEmpty()) {
+                    continue; // Skip empty lines
+                }
+                //parsing each part with pipes
+                String[] parts = line.split("\\|");
+                //making sure we have each field before loading it into variables
+                if (parts.length == 5) {
+                    String date = parts[0];
+                    String time = parts[1];
+                    String description = parts[2];
+                    String vendor = parts[3];
+                    double amount = Double.parseDouble(parts[4]);
 
-                  //making each a LedgerEntry object and adding it to an array
-                  LedgerEntry entry = new LedgerEntry(date, time, description, vendor, amount);
-                  entries.add(entry);
-              }
-          }
+                    //making each a LedgerEntry object and adding it to an array
+                    LedgerEntry entry = new LedgerEntry(date, time, description, vendor, amount);
+                    entries.add(entry);
+                }
+            }
         } catch (IOException e) {
             System.out.println("Error reading ledger file: " + e.getMessage());
         }

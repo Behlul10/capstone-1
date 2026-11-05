@@ -1,6 +1,5 @@
 package com.pluralsight;
 
-import java.sql.Array;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -13,108 +12,16 @@ import java.time.format.DateTimeFormatter;
  */
 public class MainMenuApplication {
     public static void main(String[] args) {
-        //region artistic intro sequence
-        String pcAsciiArt = """
-                ::::==========::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-                :::::::=========::::::.---------------.:::::::::::::::::::::::::::::::::::::::::::
-                :::=============::::::| .-----------. |:::::::::::::::::::::::::::::::::::::::::::
-                ::::==========::::::::| | === == == | |:::::::::::::::::::::::::::::::::::::::::::
-                ::::==========::::::::| | 260 ED OO | |:::::::::::::::::::::::::::::::::::::::::::
-                :::::::=========='::::| |  urgent!  | |:::::::::::::::::::::::::::::::::::::::::::
-                :::===========::::::::| |___________| |::::::((;):::::::::::::::::::::::::::::::::
-                ""\""============""\"""\"|___________oo__|"")""\"";(""\"""\"""\"""\"""\"""\"""\""
-                  ==========='           ___)___(___,o  (   .---._
-                     ===========        |___________| 8  \\ |TEA|_)    .+-------+.
-                  ===========                     o8o8    ) |___|    .' |_______| `.
-                    =============      __________8___    (          /  /         \\  \\
-                 |\\`==========='/|   .'= --------- --`.   `.       |\\ /           \\ /|
-                 | "-----------" |  / ooooooooooooo  oo\\   _\\_     | "-------------" |
-                 |______I_N______| /  oooooooooooo[] ooo\\  |=|     |_______OUT_______|
-                                  / O O =========  O OO  \\ "-"   .-------,
-                                  `""\"""\"""\"""\"""\"""\"""\""'      /~~~~~~~/
-                _______________________________________________/_   ~~~/_______________
-                hjw.......................................... \\/_____/..desk at 17:30..
-                """;
-        String eyeAsciiArt = """
-                .           ..         .           .       .           .           .
-                      .         .            .          .       .
-                            .         ..xxxxxxxxxx....               .       .             .
-                    .             MWMWMWWMWMWMWMWMWMWMWMWMW                       .
-                              IIIIMWMWMWMWMWMWMWMWMWMWMWMWMWMttii:        .           .
-                 .      IIYVVXMWMWMWMWMWMWMWMWMWMWMWMWMWMWMWMWMWMWMWxx...         .           .
-                     IWMWMWMWMWMWMWMWMWMWMWMWMWMWMWMWMWMWMWMWMWMWMWMWMWMWMx..
-                   IIWMWMWMWMWMWMWMWMWBY%ZACH%AND%OWENMWMWMWMWMWMWMWMWMWMWMWMWMx..        .
-                    ""MWMWMWMWMWM""\"""\""".  .:..   .""\"""MWMWMWMWMWMWMWMWMWMWMWMWMWti.
-                 .     ""   . `  .: . :. : .  . :.  .  . . .  ""\""MWMWMWMWMWMWMWMWMWMWMWMWMti=
-                        . .   :` . :   .  .'.' '....xxxxx...,'. '   ' .""\"YWMWMWMWMWMWMWMWMWMW+
-                     ; . ` .  . : . .' :  . ..XXXXXXXXXXXXXXXXXXXXx.    `     . "YWMWMWMWMWMWMW
-                .    .  .  .    . .   .  ..XXXXXXXXWWWWWWWWWWWWWWWWXXXX.  .     .     ""\"""\""
-                        ' :  : . : .  ...XXXXXWWW"   W88N88@888888WWWWWXX.   .   .       . .
-                   . ' .    . :   ...XXXXXXWWW"    M88N88GGGGGG888^8M "WMBX.          .   ..  :
-                         :     ..XXXXXXXXWWW"     M88888WWRWWWMW8oo88M   WWMX.     .    :    .
-                           "XXXXXXXXXXXXWW"       WN8888WWWWW  W8@@@8M    BMBRX.         .  : :
-                  .       XXXXXXXX=MMWW":  .      W8N888WWWWWWWW88888W      XRBRXX.  .       .
-                     ....  ""XXXXXMM::::. .        W8@889WWWWWM8@8N8W      . . :RRXx.    .
-                         ``...'''  MMM::.:.  .      W888N89999888@8W      . . ::::"RXV    .  :
-                 .       ..'''''      MMMm::.  .      WW888N88888WW     .  . mmMMMMMRXx
-                      ..' .            ""MMmm .  .       WWWWWWW   . :. :,miMM""\"  : ""`    .
-                   .                .       ""MMMMmm . .  .  .   ._,mMMMM""\"  :  ' .  :
-                               .                  ""MMMMMMMMMMMMM""\" .  : . '   .        .
-                          .              .     .    .                      .         .
-                .                                         .          .         .
-                
-                """;
-
-        try {
-
-            Thread.sleep(500);
-            System.out.print("N");
-            Thread.sleep(500);
-            System.out.print("e");
-            Thread.sleep(500);
-            System.out.println("o");
-            Thread.sleep(500);
-            System.out.println(pcAsciiArt);
-            Thread.sleep(500);
-            System.out.println(eyeAsciiArt);
-        } catch (
-                InterruptedException e) {
-            e.printStackTrace();
-        }
-        //endregion
+        asciiArtPrint("starter-sequence");
 
         //Initializing
         Scanner myScanner = new Scanner(System.in);
         String transactionPath = "src/main/resources/transaction.csv";
         String userInput;
-        String space = " ";
 
         //Main Menu Loop
         while (true) {
-            System.out.printf("""
-                    \033[32m
-                    ╔══════════════════════════════════════╗
-                    ║                                      ║
-                    ║      █████╗ ████████╗███╗   ███╗     ║
-                    ║     ██╔══██╗╚══██╔══╝████╗ ████║     ║
-                    ║     ███████║   ██║   ██╔████╔██║     ║
-                    ║     ██╔══██║   ██║   ██║╚██╔╝██║     ║
-                    ║     ██║  ██║   ██║   ██║ ╚═╝ ██║     ║
-                    ║     ╚═╝  ╚═╝   ╚═╝   ╚═╝     ╚═╝     ║
-                    ║                                      ║
-                    ║          BANK OF Matrix              ║
-                    ║  ┌────────────────────────────────┐  ║
-                    ║  │                                │  ║
-                    ║  │  [A]  Add Deposit              │  ║
-                    ║  │  [M]  Make Payment (Debit)     │  ║
-                    ║  │  [L]  Ledger                   │  ║
-                    ║  │  [X]  Exit                     │  ║
-                    ║  │                                │  ║
-                    ║  ├────────────────────────────────┤  ║
-                    ║  │        Select an option        │  ║
-                    ║  └────────────────────────────────┘  ║
-                    ╚══════════════════════════════════════╝
-                    \033[0mWere you listening to me Neo? -->%s""", space);
+            asciiArtPrint("home-menu");
             userInput = myScanner.nextLine().toLowerCase();
             switch (userInput) {
                 case "a" -> addDeposit(myScanner, transactionPath);
@@ -193,33 +100,10 @@ public class MainMenuApplication {
         String userInput;
         Boolean breakPoint = true;
         while (breakPoint) {
+            asciiArtPrint("ledger-screen");
+
             //create a ledger class instance with all csv's inputted
-            Ledgers myLedger = new Ledgers(transactionPath);
-            String space = " ";
-            System.out.printf("""
-                    \033[36m
-                    ╔══════════════════════════════════════╗
-                    ║                                      ║
-                    ║             L E D G E R              ║
-                    ║    ┌─────────────┬─────────────┐     ║
-                    ║    │ + $  xxx.xx │ - $   xx.xx │     ║
-                    ║    │ + $  xxx.xx │ - $   xx.xx │     ║
-                    ║    │ + $   xx.xx │ - $   xx.xx │     ║
-                    ║    └─────────────┴─────────────┘     ║
-                    ║                                      ║
-                    ║  ┌────────────────────────────────┐  ║
-                    ║  │                                │  ║
-                    ║  │  [A]  All Entries              │  ║
-                    ║  │  [D]  Deposits                 │  ║
-                    ║  │  [P]  Payments                 │  ║
-                    ║  │  [R]  Reports                  │  ║
-                    ║  │  [H]  Home                     │  ║
-                    ║  │                                │  ║
-                    ║  ├────────────────────────────────┤  ║
-                    ║  │        Select an option        │  ║
-                    ║  └────────────────────────────────┘  ║
-                    ╚══════════════════════════════════════╝
-                    \033[0m[=] You have to choose a pill Keanu! -->%s""", space);
+            Ledger myLedger = new Ledger(transactionPath);
 
             userInput = methodScanner.nextLine().toLowerCase();
             switch (userInput) {
@@ -232,13 +116,13 @@ public class MainMenuApplication {
                 }
                 case "d" -> {
                     //loop deposits and print
-                    for (LedgerEntry item : myLedger.getDeposits()){
+                    for (LedgerEntry item : myLedger.getDeposits()) {
                         System.out.println(item);
                     }
                 }
                 case "p" -> {
                     //payments
-                    for (LedgerEntry item : myLedger.getPayments()){
+                    for (LedgerEntry item : myLedger.getPayments()) {
                         System.out.println(item);
                     }
                 }
@@ -249,40 +133,12 @@ public class MainMenuApplication {
         }
     }
 
-    public static void reportMenuScreen(Scanner methodScanner, Ledgers myLedger) {
-        String space = " ";
+    public static void reportMenuScreen(Scanner methodScanner, Ledger myLedger) {
         int usrInput;
         boolean breakPoint = true;
         while (breakPoint) {
-            System.out.printf("""
-                    \033[35m
-                    ╔══════════════════════════════════════╗
-                    ║                                      ║
-                    ║            R E P O R T S             ║
-                    ║                                      ║
-                    ║     $ │            ▄▄                ║
-                    ║       │       ▄▄   ██   ▄▄           ║
-                    ║       │  ▄▄   ██   ██   ██           ║
-                    ║       │  ██   ██   ██   ██           ║
-                    ║       └─────────────────────         ║
-                    ║          Q1   Q2   Q3   Q4           ║
-                    ║                                      ║
-                    ║  ┌────────────────────────────────┐  ║
-                    ║  │                                │  ║
-                    ║  │  [1]  Month To Date            │  ║
-                    ║  │  [2]  Previous Month           │  ║
-                    ║  │  [3]  Year To Date             │  ║
-                    ║  │  [4]  Previous Year            │  ║
-                    ║  │  [5]  Search by Vendor         │  ║
-                    ║  │  [6]  Custom Search            │  ║
-                    ║  │  [0]  Go Back                  │  ║
-                    ║  │                                │  ║
-                    ║  ├────────────────────────────────┤  ║
-                    ║  │        Select an option        │  ║
-                    ║  └────────────────────────────────┘  ║
-                    ╚══════════════════════════════════════╝
-                    \033[0m[] The Red Pill Or The Blue Pill? -->%s""", space);
             usrInput = Integer.parseInt(methodScanner.nextLine());
+            asciiArtPrint("report-screen");
 
             switch (usrInput) {
                 case 1 -> searchToDate(myLedger, "Month"); //month to date
@@ -297,7 +153,7 @@ public class MainMenuApplication {
         }
     }
 
-    public static void searchCustom(Scanner methodScanner, Ledgers myLedger) {
+    public static void searchCustom(Scanner methodScanner, Ledger myLedger) {
         List<LedgerEntry> results = new ArrayList<>();
         System.out.println("Press enter if you want to leave empty.");
 
@@ -327,7 +183,7 @@ public class MainMenuApplication {
         if (!startInput.isBlank()) {//blank checks whitespaces
             startDate = LocalDate.parse(startInput);
         } //End date
-        if (!endInput.isBlank()){
+        if (!endInput.isBlank()) {
             endDate = LocalDate.parse(endInput);
         } //Amount
         if (!amountInput.isBlank()) {
@@ -335,7 +191,7 @@ public class MainMenuApplication {
         }
 
         //Looping through each entry && Seeing if it meets the criteria
-        for (LedgerEntry entry : myLedger.getAllEntries()){
+        for (LedgerEntry entry : myLedger.getAllEntries()) {
             //TODO: fix custom search, it currently doesnt return proper results
             boolean[] matches = new boolean[5];
 
@@ -353,12 +209,12 @@ public class MainMenuApplication {
                 matches[3] = true;
             }
 
-            if (amount == null || entry.getAmount() == amount){
+            if (amount == null || entry.getAmount() == amount) {
                 matches[4] = true;
             }
 
             //FINALLY ADD MATCHES IF IT PASSED ALL THE CRITERIA
-            if(matches[0] && matches[1] && matches[2] && matches[3] && matches[4]) {
+            if (matches[0] && matches[1] && matches[2] && matches[3] && matches[4]) {
                 results.add(entry);
             }
         }
@@ -371,7 +227,7 @@ public class MainMenuApplication {
         System.out.println("====================== END OF THE LINE ======================");
     }
 
-    public static void searchToDate(Ledgers myLedger, String userDateOption) {
+    public static void searchToDate(Ledger myLedger, String userDateOption) {
         LocalDate today = LocalDate.now();
         LocalDate startOfOption;
 
@@ -396,7 +252,7 @@ public class MainMenuApplication {
         }
     }
 
-    public static void searchPrevious(Ledgers myLedger, String userDateOption) {
+    public static void searchPrevious(Ledger myLedger, String userDateOption) {
         LocalDate userCurrentTime = LocalDate.now();
         LocalDate targetDate;
 
@@ -415,7 +271,7 @@ public class MainMenuApplication {
         }
     }
 
-    public static void searchVendor(Scanner methodScanner, Ledgers myLedger) {
+    public static void searchVendor(Scanner methodScanner, Ledger myLedger) {
         System.out.println("enter the name of the vendor you want to search: ");
         String userInput = methodScanner.nextLine();
 
@@ -426,5 +282,176 @@ public class MainMenuApplication {
                 System.out.println(item);
             }
         }
+    }
+
+    public static void asciiArtPrint(String option) {
+        //region artistic intro sequence
+        String pcAsciiArt = """
+                ::::==========::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+                :::::::=========::::::.---------------.:::::::::::::::::::::::::::::::::::::::::::
+                :::=============::::::| .-----------. |:::::::::::::::::::::::::::::::::::::::::::
+                ::::==========::::::::| | === == == | |:::::::::::::::::::::::::::::::::::::::::::
+                ::::==========::::::::| | 260 ED OO | |:::::::::::::::::::::::::::::::::::::::::::
+                :::::::=========='::::| |  urgent!  | |:::::::::::::::::::::::::::::::::::::::::::
+                :::===========::::::::| |___________| |::::::((;):::::::::::::::::::::::::::::::::
+                ""\""============""\"""\"|___________oo__|"")""\"";(""\"""\"""\"""\"""\"""\"""\""
+                  ==========='           ___)___(___,o  (   .---._
+                     ===========        |___________| 8  \\ |TEA|_)    .+-------+.
+                  ===========                     o8o8    ) |___|    .' |_______| `.
+                    =============      __________8___    (          /  /         \\  \\
+                 |\\`==========='/|   .'= --------- --`.   `.       |\\ /           \\ /|
+                 | "-----------" |  / ooooooooooooo  oo\\   _\\_     | "-------------" |
+                 |______I_N______| /  oooooooooooo[] ooo\\  |=|     |_______OUT_______|
+                                  / O O =========  O OO  \\ "-"   .-------,
+                                  `""\"""\"""\"""\"""\"""\"""\""'      /~~~~~~~/
+                _______________________________________________/_   ~~~/_______________
+                hjw.......................................... \\/_____/..desk at 17:30..
+                """;
+        String eyeAsciiArt = """
+                .           ..         .           .       .           .           .
+                      .         .            .          .       .
+                            .         ..xxxxxxxxxx....               .       .             .
+                    .             MWMWMWWMWMWMWMWMWMWMWMWMW                       .
+                              IIIIMWMWMWMWMWMWMWMWMWMWMWMWMWMttii:        .           .
+                 .      IIYVVXMWMWMWMWMWMWMWMWMWMWMWMWMWMWMWMWMWMWMWxx...         .           .
+                     IWMWMWMWMWMWMWMWMWMWMWMWMWMWMWMWMWMWMWMWMWMWMWMWMWMWMx..
+                   IIWMWMWMWMWMWMWMWMWBY%ZACH%AND%OWENMWMWMWMWMWMWMWMWMWMWMWMWMx..        .
+                    ""MWMWMWMWMWM""\"""\""".  .:..   .""\"""MWMWMWMWMWMWMWMWMWMWMWMWMWti.
+                 .     ""   . `  .: . :. : .  . :.  .  . . .  ""\""MWMWMWMWMWMWMWMWMWMWMWMWMti=
+                        . .   :` . :   .  .'.' '....xxxxx...,'. '   ' .""\"YWMWMWMWMWMWMWMWMWMW+
+                     ; . ` .  . : . .' :  . ..XXXXXXXXXXXXXXXXXXXXx.    `     . "YWMWMWMWMWMWMW
+                .    .  .  .    . .   .  ..XXXXXXXXWWWWWWWWWWWWWWWWXXXX.  .     .     ""\"""\""
+                        ' :  : . : .  ...XXXXXWWW"   W88N88@888888WWWWWXX.   .   .       . .
+                   . ' .    . :   ...XXXXXXWWW"    M88N88GGGGGG888^8M "WMBX.          .   ..  :
+                         :     ..XXXXXXXXWWW"     M88888WWRWWWMW8oo88M   WWMX.     .    :    .
+                           "XXXXXXXXXXXXWW"       WN8888WWWWW  W8@@@8M    BMBRX.         .  : :
+                  .       XXXXXXXX=MMWW":  .      W8N888WWWWWWWW88888W      XRBRXX.  .       .
+                     ....  ""XXXXXMM::::. .        W8@889WWWWWM8@8N8W      . . :RRXx.    .
+                         ``...'''  MMM::.:.  .      W888N89999888@8W      . . ::::"RXV    .  :
+                 .       ..'''''      MMMm::.  .      WW888N88888WW     .  . mmMMMMMRXx
+                      ..' .            ""MMmm .  .       WWWWWWW   . :. :,miMM""\"  : ""`    .
+                   .                .       ""MMMMmm . .  .  .   ._,mMMMM""\"  :  ' .  :
+                               .                  ""MMMMMMMMMMMMM""\" .  : . '   .        .
+                          .              .     .    .                      .         .
+                .                                         .          .         .
+                
+                """;
+        String space = " ";
+        String starterMenuScreen = """
+                    \033[32m
+                    ╔══════════════════════════════════════╗
+                    ║                                      ║
+                    ║      █████╗ ████████╗███╗   ███╗     ║
+                    ║     ██╔══██╗╚══██╔══╝████╗ ████║     ║
+                    ║     ███████║   ██║   ██╔████╔██║     ║
+                    ║     ██╔══██║   ██║   ██║╚██╔╝██║     ║
+                    ║     ██║  ██║   ██║   ██║ ╚═╝ ██║     ║
+                    ║     ╚═╝  ╚═╝   ╚═╝   ╚═╝     ╚═╝     ║
+                    ║                                      ║
+                    ║          BANK OF Matrix              ║
+                    ║  ┌────────────────────────────────┐  ║
+                    ║  │                                │  ║
+                    ║  │  [A]  Add Deposit              │  ║
+                    ║  │  [M]  Make Payment (Debit)     │  ║
+                    ║  │  [L]  Ledger                   │  ║
+                    ║  │  [X]  Exit                     │  ║
+                    ║  │                                │  ║
+                    ║  ├────────────────────────────────┤  ║
+                    ║  │        Select an option        │  ║
+                    ║  └────────────────────────────────┘  ║
+                    ╚══════════════════════════════════════╝
+                    \033[0mWere you listening to me Neo? -->%s""";
+
+        String ledgerScreen = """
+                    \033[36m
+                    ╔══════════════════════════════════════╗
+                    ║                                      ║
+                    ║             L E D G E R              ║
+                    ║    ┌─────────────┬─────────────┐     ║
+                    ║    │ + $  xxx.xx │ - $   xx.xx │     ║
+                    ║    │ + $  xxx.xx │ - $   xx.xx │     ║
+                    ║    │ + $   xx.xx │ - $   xx.xx │     ║
+                    ║    └─────────────┴─────────────┘     ║
+                    ║                                      ║
+                    ║  ┌────────────────────────────────┐  ║
+                    ║  │                                │  ║
+                    ║  │  [A]  All Entries              │  ║
+                    ║  │  [D]  Deposits                 │  ║
+                    ║  │  [P]  Payments                 │  ║
+                    ║  │  [R]  Reports                  │  ║
+                    ║  │  [H]  Home                     │  ║
+                    ║  │                                │  ║
+                    ║  ├────────────────────────────────┤  ║
+                    ║  │        Select an option        │  ║
+                    ║  └────────────────────────────────┘  ║
+                    ╚══════════════════════════════════════╝
+                    \033[0m[=] You have to choose a pill Keanu! -->%s""";
+
+        String reportScreen = """
+                    \033[35m
+                    ╔══════════════════════════════════════╗
+                    ║                                      ║
+                    ║            R E P O R T S             ║
+                    ║                                      ║
+                    ║     $ │            ▄▄                ║
+                    ║       │       ▄▄   ██   ▄▄           ║
+                    ║       │  ▄▄   ██   ██   ██           ║
+                    ║       │  ██   ██   ██   ██           ║
+                    ║       └─────────────────────         ║
+                    ║          Q1   Q2   Q3   Q4           ║
+                    ║                                      ║
+                    ║  ┌────────────────────────────────┐  ║
+                    ║  │                                │  ║
+                    ║  │  [1]  Month To Date            │  ║
+                    ║  │  [2]  Previous Month           │  ║
+                    ║  │  [3]  Year To Date             │  ║
+                    ║  │  [4]  Previous Year            │  ║
+                    ║  │  [5]  Search by Vendor         │  ║
+                    ║  │  [6]  Custom Search            │  ║
+                    ║  │  [0]  Go Back                  │  ║
+                    ║  │                                │  ║
+                    ║  ├────────────────────────────────┤  ║
+                    ║  │        Select an option        │  ║
+                    ║  └────────────────────────────────┘  ║
+                    ╚══════════════════════════════════════╝
+                    \033[0m[] The Red Pill Or The Blue Pill? -->%s""";
+
+
+        //endregion
+        switch (option) {
+            case "starter-sequence" -> {
+                //start up sequence
+                try {
+                    Thread.sleep(500);
+                    System.out.print("N");
+                    Thread.sleep(500);
+                    System.out.print("e");
+                    Thread.sleep(500);
+                    System.out.println("o");
+                    Thread.sleep(500);
+                    System.out.println(pcAsciiArt);
+                    Thread.sleep(500);
+                    System.out.println(eyeAsciiArt);
+                } catch (
+                        InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+            case "home-menu" -> {
+                // Starter Menu Screen
+                System.out.printf(starterMenuScreen, space);
+            }
+            case "ledger-screen" -> {
+                System.out.printf(ledgerScreen, space);
+            }
+            case "report-screen" -> {
+                System.out.printf(reportScreen, space);
+            }
+            default -> {
+                System.out.println("wrong input from the system, the code is broken");
+                System.exit(1);
+            }
+        }
+
     }
 }
