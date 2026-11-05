@@ -1,5 +1,6 @@
 package com.pluralsight;
 
+import java.sql.Array;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -166,7 +167,6 @@ public class MainMenuApplication {
         String formattedDate = userTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
         String formattedTime = userTime.format(DateTimeFormatter.ofPattern("HH:mm:ss"));
 
-
         System.out.print("enter your card number: ");
         String description = methodScanner.nextLine();
 
@@ -189,6 +189,7 @@ public class MainMenuApplication {
     }
 
     public static void ledgerScreen(Scanner methodScanner, String transactionPath) {
+        //TODO: Add sorting for entries from newest to oldest
         String userInput;
         Boolean breakPoint = true;
         while (breakPoint) {
@@ -243,7 +244,7 @@ public class MainMenuApplication {
                 }
                 case "r" -> reportMenuScreen(methodScanner, myLedger); //Report menu
                 case "h" -> breakPoint = false;
-                default -> System.out.printf("What are we doing? Please type something I can understand!");
+                default -> System.out.println("What are we doing? Please type something I can understand!");
             }
         }
     }
@@ -300,6 +301,7 @@ public class MainMenuApplication {
         List<LedgerEntry> results = new ArrayList<>();
         System.out.println("Press enter if you want to leave empty.");
 
+        //TODO: ask for format + loop if wrong format for date
         System.out.print("Start date: ");
         String startInput = methodScanner.nextLine();
 
@@ -334,28 +336,29 @@ public class MainMenuApplication {
 
         //Looping through each entry && Seeing if it meets the criteria
         for (LedgerEntry entry : myLedger.getAllEntries()){
-            boolean matches = true;
+            //TODO: fix custom search, it currently doesnt return proper results
+            boolean[] matches = new boolean[5];
 
             //filter through start-date, end-date, description, vendor, amount
-            if (startDate != null && entry.getDate().isBefore(startDate)) { //checks for start date and if entry is too old
-                matches = false;
+            if (startDate == null || entry.getDate().isBefore(startDate)) { //checks for start date and if entry is too old
+                matches[0] = true;
             }
-            if (endDate != null && entry.getDate().isAfter(endDate)) { //if user set something and entry is before users input date
-                matches = false;
+            if (endDate == null || entry.getDate().isAfter(endDate)) { //if user set something and entry is before users input date
+                matches[1] = true;
             }
-            if (!description.isBlank() && entry.getDescription().contains(description)) {
-                matches = false;
+            if (description.isBlank() || entry.getDescription().contains(description)) {
+                matches[2] = true;
             }
-            if (!vendor.isBlank() && entry.getVendor().equals(vendor)) {
-                matches = false;
+            if (vendor.isBlank() || entry.getVendor().equalsIgnoreCase(vendor)) {
+                matches[3] = true;
             }
 
-            if (amount != null && entry.getAmount() != amount){
-                matches = false;
+            if (amount == null || entry.getAmount() == amount){
+                matches[4] = true;
             }
 
             //FINALLY ADD MATCHES IF IT PASSED ALL THE CRITERIA
-            if(matches) {
+            if(matches[0] && matches[1] && matches[2] && matches[3] && matches[4]) {
                 results.add(entry);
             }
         }
@@ -392,7 +395,6 @@ public class MainMenuApplication {
             }
         }
     }
-
 
     public static void searchPrevious(Ledgers myLedger, String userDateOption) {
         LocalDate userCurrentTime = LocalDate.now();
