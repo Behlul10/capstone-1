@@ -1,5 +1,6 @@
 package com.pluralsight;
 
+import javax.print.MultiDocPrintService;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -24,8 +25,8 @@ public class MainMenuApplication {
             asciiArtPrint("home-menu");
             userInput = myScanner.nextLine().toLowerCase();
             switch (userInput) {
-                case "a" -> addDeposit(myScanner, transactionPath);
-                case "m" -> makePayment(myScanner, transactionPath);
+                case "d" -> addDeposit(myScanner, transactionPath);
+                case "p" -> makePayment(myScanner, transactionPath);
                 case "l" -> ledgerScreen(myScanner, transactionPath);
                 case "x" -> System.exit(0);
                 default -> System.out.println("Invalid Input, Try again!");
@@ -133,20 +134,20 @@ public class MainMenuApplication {
     }
 
     public static void reportMenuScreen(Scanner methodScanner, Ledger myLedger) {
-        int usrInput;
+        String usrInput;
+        int command;
         boolean breakPoint = true;
         while (breakPoint) {
             asciiArtPrint("report-screen");
-            usrInput = Integer.parseInt(methodScanner.nextLine());
-
+            usrInput = methodScanner.nextLine();
             switch (usrInput) {
-                case 1 -> searchToDate(myLedger, "Month"); //month to date
-                case 2 -> searchPrevious(myLedger, "month"); //previous month
-                case 3 -> searchToDate(myLedger, "Year"); //year to date
-                case 4 -> searchPrevious(myLedger, "year"); //prev year
-                case 5 -> searchVendor(methodScanner, myLedger);
-                case 6 -> searchCustom(methodScanner, myLedger);
-                case 0 -> breakPoint = false;
+                case "1" -> searchToDate(myLedger, "Month"); //month to date
+                case "2" -> searchPrevious(myLedger, "month"); //previous month
+                case "3" -> searchToDate(myLedger, "Year"); //year to date
+                case "4" -> searchPrevious(myLedger, "year"); //prev year
+                case "5" -> searchVendor(methodScanner, myLedger);
+                case "6" -> searchCustom(methodScanner, myLedger);
+                case "0" -> breakPoint = false;
                 default -> System.out.println("What was it that I said Neo?");
             }
         }
@@ -355,8 +356,8 @@ public class MainMenuApplication {
                     ║          BANK OF Matrix              ║
                     ║  ┌────────────────────────────────┐  ║
                     ║  │                                │  ║
-                    ║  │  [A]  Add Deposit              │  ║
-                    ║  │  [M]  Make Payment (Debit)     │  ║
+                    ║  │  [D]  Add Deposit              │  ║
+                    ║  │  [P]  Make Payment (Debit)     │  ║
                     ║  │  [L]  Ledger                   │  ║
                     ║  │  [X]  Exit                     │  ║
                     ║  │                                │  ║
