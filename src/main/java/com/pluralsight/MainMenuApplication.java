@@ -3,6 +3,7 @@ package com.pluralsight;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Scanner;
 import java.io.*;
 import java.time.*;
@@ -207,7 +208,7 @@ public class MainMenuApplication {
             if (endDate == null || !entry.getDate().isAfter(endDate)) { //if user set something and entry is before users input date
                 matches[1] = true;
             }
-            if (description.isBlank() || entry.getDescription().contains(description)) {
+            if (description.isBlank() || entry.getDescription().toLowerCase().contains(description.toLowerCase())) {
                 matches[2] = true;
             }
             if (vendor.isBlank() || entry.getVendor().equalsIgnoreCase(vendor)) {
@@ -289,7 +290,7 @@ public class MainMenuApplication {
         //for each loop, looping through list of entries in the csv file as item
         for (LedgerEntry item : myLedger.getAllEntries()) {
             //if the month value of the month to search and year to search matches the singular entry
-            if (item.getVendor().equals(userInput)) {
+            if (item.getVendor().equalsIgnoreCase(userInput)) {
                 System.out.println(item);
             }
         }
