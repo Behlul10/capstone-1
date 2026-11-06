@@ -34,6 +34,7 @@ public class MainMenuApplication {
         }
     }
 
+    //Screens
     public static void addDeposit(Scanner methodScanner, String transactionPath) {
         //Getting time of user in correct format
         LocalDateTime userTime = LocalDateTime.now();
@@ -152,6 +153,7 @@ public class MainMenuApplication {
         }
     }
 
+    //helper methods
     public static void searchCustom(Scanner methodScanner, Ledger myLedger) {
         List<LedgerEntry> results = new ArrayList<>();
         System.out.println("Press enter if you want to leave empty.");
@@ -523,7 +525,7 @@ public class MainMenuApplication {
                     Thread.sleep(500);
                     System.out.print(".");
                     Thread.sleep(1000);
-                    System.out.print(" I didn't let go");
+                    System.out.print(" I didn't let go \n");
                     Thread.sleep(4000);
                     System.out.println(pcAsciiArt);
                     Thread.sleep(2500);
