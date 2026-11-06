@@ -3,7 +3,6 @@ package com.pluralsight;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 import java.util.Scanner;
 import java.io.*;
 import java.time.*;
@@ -362,6 +361,65 @@ public class MainMenuApplication {
                 .                                         .          .         .
                 
                 """;
+        String skeletonAscii = """
+                
+                
+                                                       @= + @    :                                                 \s
+                                                    -       #  @           .                                       \s
+                                                .     :  :%         -. *                                           \s
+                                                          :   =.     %                                             \s
+                                                     ==*= % *.  @ .      =.@                                       \s
+                                                    @.  *  #  +@@#*@ =-@% * @                                      \s
+                                              :     %#:@ @+  # @=  @  :   .       +-                               \s
+                                                  @  @@@ --@# @    +  * :  .         -*                            \s
+                                                  :  +  @@=:*-.:%@+   .:         -.                                \s
+                                             *+ .     =%%++=# %% +@@ @@@@-*:  =*                                   \s
+                                            :   - =@@ @*+=+-*++**# =@   +*@@@ @+@ ..       -                       \s
+                                                  -@%*#==========++-   **  #@- @+ @=     .                         \s
+                                           -     @-%++============+*@@@@##*#  %@                                   \s
+                                                . # -*+===========+-+. +=+*=  @@=@.                                \s
+                                          ::      @%* #===========+ +++++=*@:#          -                          \s
+                                           @    .:+.@ @===========***+++#-@:@ @@@                                  \s
+                                         @   @%+ %=+@ @+:======-+*= :.:* - :    @@.                                \s
+                                          @   @@ ** % #-+==+++==*= @*** .% +   @@#@    - -                         \s
+                                          @  @+%#.=#:*+===+* +==+. *=- **@@  @    =  : -.                          \s
+                                              @@@*@@#*+++=+:++==+##**#=*%@ @=@@@    *                              \s
+                                          @   =     .+*%@%##*+-=+=*# #+.     .  .#@  *@ - -                        \s
+                                               +@@@@ =      -%@%%+*-  -%@@#*:# ..=          .                      \s
+                                          @. .=% @ .##%@@@%#*   * %*%# * @ .@  -      --# -.                       \s
+                                         :*@#@@@=@@#-++*+##*%@@@ @%*#%%@%@       #                                 \s
+                                                   *@@-@-+ . %+@ %+ --  %#      :@   %-    @==                     \s
+                                          :      @@.  +@% @%@ #@ @@@@ @ -@*  .-     :. #                           \s
+                                          =      .@@ *     ::  @#@    =                                            \s
+                                        @           @%                                                             \s
+                                       *=   @                 . @ @@            @                                  \s
+                                           @@                  @# :@                      .@@@                     \s
+                                         : @@                @@@ #@@@@: :                  @%@                     \s
+                                             @+    :       @   - @@@                        -                      \s
+                                        .  @:#@@@:     @@@@ +:@                         .@                         \s
+                                                 -@@@*@ .                       . =- .                             \s
+                                                           =#                                                      \s
+                                                          *                                                        \s
+                                                     .:-    :                                                      \s
+                                                         #@ +      #      :                                        \s
+                                                      .   @ -      %     :#                                        \s
+                                                       :  =%@@    :+     @                                         \s
+                                                   @     @ % @@@ +@*# : @#                                         \s
+                                                   @@@@  @@ **+*%#%@. + @                                          \s
+                                                    @:@@  #@%@%*@*-@@                                              \s
+                                                   :@=  @     ++ :@%                                               \s
+                                                       @==@@ .              @-                                     \s
+                                                     . #@: @@@@@@@  @@@.@@-@@*                                     \s
+                                                     -   @@ #*@@%@@@@@  @*                                         \s
+                                                          @@.   @@ @@%  +                                          \s
+                 @@@+                               :%      %@@                                                    \s
+                 **%@:                        = %@ .# *     %@ @@=@=@                                              \s
+                .@@@@=                         %:@:: :  .         # #                                              \s
+                          @                   -@= @          .                                                     \s
+                      - .   +:@ . -%:    + @@ -+               .                                                   \s
+                  @@ @-=*=@   + :       @ + @ .         :@@@  =@                                                   \s
+                   :                                         .                                                     \s
+                """;
         String space = " ";
         String starterMenuScreen = """
                     \033[32m
@@ -454,9 +512,21 @@ public class MainMenuApplication {
                     System.out.print("e");
                     Thread.sleep(500);
                     System.out.println("o");
+                    Thread.sleep(1500);
+                    System.out.println(skeletonAscii);
+                    Thread.sleep(1500);
+                    System.out.print("I once got so mad I cought the tiger by his toe and when he hollered");
+                    Thread.sleep(1000);
+                    System.out.print(".");
                     Thread.sleep(500);
+                    System.out.print(".");
+                    Thread.sleep(500);
+                    System.out.print(".");
+                    Thread.sleep(1000);
+                    System.out.print(" I didn't let go");
+                    Thread.sleep(4000);
                     System.out.println(pcAsciiArt);
-                    Thread.sleep(500);
+                    Thread.sleep(2500);
                     System.out.println(eyeAsciiArt);
                 } catch (
                         InterruptedException e) {
