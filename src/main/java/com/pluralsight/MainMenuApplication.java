@@ -1,6 +1,5 @@
 package com.pluralsight;
 
-import javax.print.MultiDocPrintService;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -41,17 +40,17 @@ public class MainMenuApplication {
         String formattedTime = userTime.format(DateTimeFormatter.ofPattern("HH:mm:ss"));
 
         //initializing
-        String description = "deposit";
         double depositAmt = 0;
 
         //user input
         System.out.print("Enter your name: ");
         String userName = methodScanner.nextLine();
 
+        System.out.print("Description: ");
+        String description = methodScanner.nextLine();
         //looping deposit amount input until user inputs a valid deposit amount
         while (true) {
-            System.out.print("Enter deposit amount: ");
-            depositAmt = Double.parseDouble(methodScanner.nextLine());
+            depositAmt = readDoubleAmount(methodScanner, "Deposit Amount: ");
 
             if (depositAmt < 1) {
                 System.out.println("You tried to pull a fast one but we're a bank");
@@ -81,8 +80,8 @@ public class MainMenuApplication {
         System.out.print("Who is the vendor your buying from?: ");
         String vendor = methodScanner.nextLine();
 
-        System.out.print("How much?: ");
-        double amount = Double.parseDouble(methodScanner.nextLine());
+        double amount = readDoubleAmount(methodScanner, "Enter an amount you would like to pay: $");
+
         if (amount > 0) {
             amount *= -1;
         }
@@ -285,6 +284,20 @@ public class MainMenuApplication {
             //if the month value of the month to search and year to search matches the singular entry
             if (item.getVendor().equals(userInput)) {
                 System.out.println(item);
+            }
+        }
+    }
+
+    public static double readDoubleAmount(Scanner methodScanner, String message) {
+        double amount;
+
+        while (true){
+            try{
+                System.out.print(message);
+                amount = Double.parseDouble(methodScanner.nextLine());
+                return amount;
+            } catch (NumberFormatException e) {
+                System.out.println("Enter a valid input");
             }
         }
     }
