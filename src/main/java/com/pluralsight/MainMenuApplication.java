@@ -1,5 +1,6 @@
 package com.pluralsight;
 
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -156,11 +157,10 @@ public class MainMenuApplication {
         List<LedgerEntry> results = new ArrayList<>();
         System.out.println("Press enter if you want to leave empty.");
 
-        //TODO: ask for format + loop if wrong format for date
-        System.out.print("Start date: ");
+        System.out.print("Start date (yyyy-MM-dd): ");
         String startInput = methodScanner.nextLine();
 
-        System.out.print("End Date: ");
+        System.out.print("End Date (yyyy-MM-dd): ");
         String endInput = methodScanner.nextLine();
 
         System.out.print("Description: ");
@@ -178,15 +178,23 @@ public class MainMenuApplication {
         Double amount = null;
 
         //P A R S E    I F    N O T    E M P T Y
-        //Start Date
-        if (!startInput.isBlank()) {//blank checks whitespaces
-            startDate = LocalDate.parse(startInput);
-        } //End date
-        if (!endInput.isBlank()) {
-            endDate = LocalDate.parse(endInput);
-        } //Amount
-        if (!amountInput.isBlank()) {
-            amount = Double.parseDouble(amountInput);
+        try{
+            //Start Date
+            if (!startInput.isBlank()) {//blank checks whitespaces
+                startDate = LocalDate.parse(startInput);
+            } //End date
+            if (!endInput.isBlank()) {
+                endDate = LocalDate.parse(endInput);
+            } //Amount
+            if (!amountInput.isBlank()) {
+                amount = Double.parseDouble(amountInput);
+            }
+        } catch (DateTimeParseException d) {
+            System.out.println("Wrong input, enter a valid date in (yyyy-MM-dd) format");
+            return; //goes back to the report menu
+        } catch (NumberFormatException e) {
+            System.out.println("Invalid: Enter a valid amount");
+            return; //goes back to the report menu
         }
 
         //Looping through each entry && Seeing if it meets the criteria
