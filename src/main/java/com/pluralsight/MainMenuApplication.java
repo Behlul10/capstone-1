@@ -75,7 +75,7 @@ public class MainMenuApplication {
         String formattedDate = userTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
         String formattedTime = userTime.format(DateTimeFormatter.ofPattern("HH:mm:ss"));
 
-        System.out.print("enter your card number: ");
+        System.out.print("enter your description: ");
         String description = methodScanner.nextLine();
 
         System.out.print("Who is the vendor your buying from?: ");
