@@ -63,7 +63,7 @@ public class Ledger {
 
         //for each loop iterating through all the entries in the list
         for (LedgerEntry item : entries) {
-            //only add if description has deposit inside it
+            //if item is positive (adding money)
             if (item.getAmount() > 0) {
                 result.add(item);
             }

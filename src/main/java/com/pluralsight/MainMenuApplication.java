@@ -41,7 +41,7 @@ public class MainMenuApplication {
         String formattedTime = userTime.format(DateTimeFormatter.ofPattern("HH:mm:ss"));
 
         //initializing
-        double depositAmt = 0;
+        double depositAmt;
 
         //user input
         System.out.print("Enter your name: ");
@@ -98,7 +98,7 @@ public class MainMenuApplication {
 
     public static void ledgerScreen(Scanner methodScanner, String transactionPath) {
         String userInput;
-        Boolean breakPoint = true;
+        boolean breakPoint = true;
         while (breakPoint) {
             asciiArtPrint("ledger-screen");
 
@@ -135,7 +135,6 @@ public class MainMenuApplication {
 
     public static void reportMenuScreen(Scanner methodScanner, Ledger myLedger) {
         String usrInput;
-        int command;
         boolean breakPoint = true;
         while (breakPoint) {
             asciiArtPrint("report-screen");
@@ -202,7 +201,7 @@ public class MainMenuApplication {
             boolean[] matches = new boolean[5];
 
             //filter through start-date, end-date, description, vendor, amount
-            if (startDate == null || !entry.getDate().isBefore(startDate)) { //checks for start date and if entry is too old
+            if (startDate == null || !entry.getDate().isBefore(startDate)) { //match if no start date, or entry is on/after start date
                 matches[0] = true;
             }
             if (endDate == null || !entry.getDate().isAfter(endDate)) { //if user set something and entry is before users input date
@@ -460,24 +459,20 @@ public class MainMenuApplication {
                     System.out.println(eyeAsciiArt);
                 } catch (
                         InterruptedException e) {
+                    System.out.println("Thread.sleep had an Issue!");
                     e.printStackTrace();
                 }
             }
-            case "home-menu" -> {
-                // Starter Menu Screen
-                System.out.printf(starterMenuScreen, space);
-            }
-            case "ledger-screen" -> {
-                System.out.printf(ledgerScreen, space);
-            }
-            case "report-screen" -> {
-                System.out.printf(reportScreen, space);
-            }
+            case "home-menu" -> System.out.printf(starterMenuScreen, space); // Starter Menu Screen
+
+            case "ledger-screen" -> System.out.printf(ledgerScreen, space);
+
+            case "report-screen" -> System.out.printf(reportScreen, space);
+
             default -> {
-                System.out.println("wrong input from the system, the code is broken");
+                System.out.print("wrong input from the system, the code is broken");
                 System.exit(1);
             }
         }
-
     }
 }
