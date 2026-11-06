@@ -4,23 +4,26 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
+ * Ledger(String filepath)
  *
  */
 public class Ledger {
     private List<LedgerEntry> entries;
     String filePath;
 
-    public Ledger(String filePath){
+    public Ledger(String filePath) {
         this.filePath = filePath;
         this.entries = new ArrayList<>();
         loadEntries();
     }
-    private void loadEntries(){
+
+    private void loadEntries() {
         //reading csv file
-        try(BufferedReader reader = new BufferedReader(new FileReader(filePath))){
+        try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
             String line;
             //loading csv line to line var + checking if line is not empty
             while ((line = reader.readLine()) != null) {
@@ -42,33 +45,38 @@ public class Ledger {
                     entries.add(entry);
                 }
             }
+            Collections.sort(entries);  // calls on my compareTo() on LedgerEntry() on pairs of entries repeatedly to decide the order (Sorting Algo)
+            Collections.reverse(entries); //flips the sorted listl
         } catch (IOException e) {
             System.out.println("Error reading ledger file: " + e.getMessage());
         }
     }
 
     //get all entries method
-    public List<LedgerEntry> getAllEntries(){ return entries; }
+    public List<LedgerEntry> getAllEntries() {
+        return entries;
+    }
 
-    public List<LedgerEntry> getDeposits(){
+    public List<LedgerEntry> getDeposits() {
         //Creating a new array list object for LedgerEntries with only depoists
         List<LedgerEntry> result = new ArrayList<>();
 
         //for each loop iterating through all the entries in the list
-        for(LedgerEntry item : entries){
+        for (LedgerEntry item : entries) {
             //only add if description has deposit inside it
-            if(item.getAmount() > 0) {
+            if (item.getAmount() > 0) {
                 result.add(item);
             }
         }
         return result;
     }
+
     //gets only payments
     public List<LedgerEntry> getPayments() {
         List<LedgerEntry> result = new ArrayList<>();
         //for each loop iterating thorough each entry
-        for (LedgerEntry item : entries){
-            if(item.getAmount() < 0){
+        for (LedgerEntry item : entries) {
+            if (item.getAmount() < 0) {
                 result.add(item);
             }
         }

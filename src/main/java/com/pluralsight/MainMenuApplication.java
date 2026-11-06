@@ -96,7 +96,6 @@ public class MainMenuApplication {
     }
 
     public static void ledgerScreen(Scanner methodScanner, String transactionPath) {
-        //TODO: Add sorting for entries from newest to oldest
         String userInput;
         Boolean breakPoint = true;
         while (breakPoint) {
@@ -192,7 +191,6 @@ public class MainMenuApplication {
 
         //Looping through each entry && Seeing if it meets the criteria
         for (LedgerEntry entry : myLedger.getAllEntries()) {
-            //TODO: fix custom search, it currently doesnt return proper results
             boolean[] matches = new boolean[5];
 
             //filter through start-date, end-date, description, vendor, amount
