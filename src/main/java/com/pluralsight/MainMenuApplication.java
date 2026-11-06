@@ -16,7 +16,7 @@ public class MainMenuApplication {
 
         //Initializing
         Scanner myScanner = new Scanner(System.in);
-        String transactionPath = "src/main/resources/transaction.csv";
+        String transactionPath = "src/main/resources/transactions.csv";
         String userInput;
 
         //Main Menu Loop
@@ -137,8 +137,8 @@ public class MainMenuApplication {
         int usrInput;
         boolean breakPoint = true;
         while (breakPoint) {
-            usrInput = Integer.parseInt(methodScanner.nextLine());
             asciiArtPrint("report-screen");
+            usrInput = Integer.parseInt(methodScanner.nextLine());
 
             switch (usrInput) {
                 case 1 -> searchToDate(myLedger, "Month"); //month to date
@@ -196,10 +196,10 @@ public class MainMenuApplication {
             boolean[] matches = new boolean[5];
 
             //filter through start-date, end-date, description, vendor, amount
-            if (startDate == null || entry.getDate().isBefore(startDate)) { //checks for start date and if entry is too old
+            if (startDate == null || !entry.getDate().isBefore(startDate)) { //checks for start date and if entry is too old
                 matches[0] = true;
             }
-            if (endDate == null || entry.getDate().isAfter(endDate)) { //if user set something and entry is before users input date
+            if (endDate == null || !entry.getDate().isAfter(endDate)) { //if user set something and entry is before users input date
                 matches[1] = true;
             }
             if (description.isBlank() || entry.getDescription().contains(description)) {
@@ -246,7 +246,7 @@ public class MainMenuApplication {
             LocalDate ledgerDate = item.getDate();
 
             //if the month value of the month to search and year to search matches the singular entry
-            if (!ledgerDate.isBefore(startOfOption) && !ledgerDate.isAfter(today)) {
+                if (!ledgerDate.isBefore(startOfOption) && !ledgerDate.isAfter(today)) {
                 System.out.println(item);
             }
         }
@@ -255,9 +255,11 @@ public class MainMenuApplication {
     public static void searchPrevious(Ledger myLedger, String userDateOption) {
         LocalDate userCurrentTime = LocalDate.now();
         LocalDate targetDate;
+        boolean pickedYear = false;
 
-        if (userDateOption.equalsIgnoreCase("year")) {      //setting target date based on specification
+        if (userDateOption.equalsIgnoreCase("year")) {  //if user option is search previous year we -1 year of current user time
             targetDate = userCurrentTime.minusYears(1);
+            pickedYear = true;
         } else {
             targetDate = userCurrentTime.minusMonths(1);
         }
@@ -265,7 +267,11 @@ public class MainMenuApplication {
         for (LedgerEntry item : myLedger.getAllEntries()) {   //looping through each ledger entry as 'item'
             LocalDate ledgerDate = item.getDate();            //getting date of each item
 
-            if (ledgerDate.equals(targetDate)) { //checking if target date equals to ledger date
+            if(pickedYear) {
+                if(ledgerDate.getYear() == targetDate.getYear()) {
+                    System.out.println(item);
+                }
+            } else if (ledgerDate.getMonth() == targetDate.getMonth()  && ledgerDate.getYear() == targetDate.getYear()) {
                 System.out.println(item);
             }
         }
